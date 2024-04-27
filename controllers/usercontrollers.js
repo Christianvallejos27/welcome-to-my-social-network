@@ -22,12 +22,9 @@ const usercontroller = {
     async createusers(req, res){
         try {
             try {
-                const users = await User.create(req.body);
-                const user = await User.findOneAndUpdate(
-                  { _id: req.body.userId },
-                  { $addToSet: { users: user._id } },
-                  { new: true }
-                );
+                const user = await User.create(req.body);
+                res.json(user);
+                
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
@@ -35,11 +32,11 @@ const usercontroller = {
     },
     async updateuser(req, res){
         try {
-            try {
+        
                 const user = await user.findOneAndUpdate(
-                  { _id: req.params.userId },
-                  { $set: req.body },
-                  { runValidators: true, new: true }
+                    { _id: req.params userId },
+                    { $set: req.body },
+                    { runValidators: true, new: true }
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
@@ -47,11 +44,9 @@ const usercontroller = {
     },
     async deleteusers(req, res){
         try {
-            const user = await Users.findOneAndRemove({ _id: req.params userId });
-            const user = await User.findOneAndUpdate(
-                { user: req.params.userId },
-                { $pull: { users: req.params.userId } },
-                { new: true }
+            const friend = await friend.findOneAndDelete({ _id: req.params friendId });
+            await Student.deleteMany({ _id: { $in: friend.students } });
+
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
@@ -70,11 +65,9 @@ const usercontroller = {
     },
     async deletefriend(req, res){
         try {
-            const friend = await friend.findOneAndRemove({ _id: req.params userId });
-            const friend = await friend.findOneAndUpdate(
-                { user: req.params.userId },
-                { $pull: { users: req.params.userId } },
-                { new: true }
+            const friend = await friend.findOneAndDelete({ _id: req.params friendId });
+            await Student.deleteMany({ _id: { $in: friend.students } });
+
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
@@ -82,4 +75,4 @@ const usercontroller = {
     },
 }
 
-module.exports = usercontroller
+module.exports = usercontrollers
