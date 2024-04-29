@@ -34,20 +34,43 @@ const thoughtcontrollers = {
     },
 
 
-    async updatethought(req, res){
+     updatethought(req, res){
         try {
         
                 const thought= await thought.findOneAndUpdate(
-                    { _id: req.params userId },
+                    { _id: req.params.userId },
                     { $set: req.body },
                     { runValidators: true, new: true }
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
+        };
+    }
+
+    async deletethought(req, res){
+        try {
+            const thought = await thought.findOneAndDelete({ _id: req.params thoughtId });
+            await thought.deleteMany({ _id: { $in: thought } });
+
+        } catch (error) {
+            console.error(error)
+            res.status(500).json(error)
         }
-    },
+    }
+}
 
 
+async addthought(req, res){
+    try {
+        const friend = await thought.findOneAndUpdate(
+            { _id: req.params thoughtId },
+            { $addToSet: { responses: req.body } },
+            { runValidators: true, new: true }
+    } catch (error) {
+        console.error(error)
+        res.status(500).json(error)
+    }
+},
 
 
 module.exports = thoughtcontrollers

@@ -34,7 +34,7 @@ const usercontroller = {
         try {
         
                 const user = await user.findOneAndUpdate(
-                    { _id: req.params userId },
+                    { _id: req.params.userId },
                     { $set: req.body },
                     { runValidators: true, new: true }
         } catch (error) {
@@ -44,7 +44,7 @@ const usercontroller = {
     },
     async deleteusers(req, res){
         try {
-            const friend = await friend.findOneAndDelete({ _id: req.params friendId });
+            const friend = await friend.findOneAndDelete({ _id: req.params.friendId });
             await Student.deleteMany({ _id: { $in: friend.students } });
 
         } catch (error) {
@@ -55,7 +55,7 @@ const usercontroller = {
     async addfriend(req, res){
         try {
             const friend = await friend.findOneAndUpdate(
-                { _id: req.params userId },
+                { _id: req.params. userId },
                 { $addToSet: { responses: req.body } },
                 { runValidators: true, new: true }
         } catch (error) {
@@ -65,7 +65,7 @@ const usercontroller = {
     },
     async deletefriend(req, res){
         try {
-            const friend = await friend.findOneAndDelete({ _id: req.params friendId });
+            const friend = await friend.findOneAndDelete({ _id: req.params.friendId });
             await Student.deleteMany({ _id: { $in: friend.students } });
 
         } catch (error) {
@@ -75,4 +75,4 @@ const usercontroller = {
     },
 }
 
-module.exports = usercontrollers
+module.exports = usercontroller
