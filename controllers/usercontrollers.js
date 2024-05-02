@@ -20,7 +20,7 @@ const usercontroller = {
         }
     },
     async createusers(req, res){
-        try {
+        
             try {
                 const user = await User.create(req.body);
                 res.json(user);
@@ -29,22 +29,22 @@ const usercontroller = {
             console.error(error)
             res.status(500).json(error)
         }
-    },
-    async updateuser(req, res){
+        }, 
+        async updateuser  (req, res) { 
         try {
         
-                const user = await user.findOneAndUpdate(
+                const user = await User.findOneAndUpdate(
                     { _id: req.params.userId },
                     { $set: req.body },
-                    { runValidators: true, new: true }
-        } catch (error) {
+                    { runValidators: true, new: true })
+        } catch (error){
             console.error(error)
             res.status(500).json(error)
         }
     },
-    async deleteusers(req, res){
+     async deleteusers (req, res){
         try {
-            const friend = await friend.findOneAndDelete({ _id: req.params.friendId });
+            const friend = await Users.findOneAndDelete({ _id: req.params.friendId });
             await Student.deleteMany({ _id: { $in: friend.students } });
 
         } catch (error) {
@@ -54,10 +54,10 @@ const usercontroller = {
     },
     async addfriend(req, res){
         try {
-            const friend = await friend.findOneAndUpdate(
+            const friend = await Friend.findOneAndUpdate(
                 { _id: req.params. userId },
                 { $addToSet: { responses: req.body } },
-                { runValidators: true, new: true }
+                { runValidators: true, new: true })
         } catch (error) {
             console.error(error)
             res.status(500).json(error)
@@ -65,7 +65,7 @@ const usercontroller = {
     },
     async deletefriend(req, res){
         try {
-            const friend = await friend.findOneAndDelete({ _id: req.params.friendId });
+            const friend = await Friend.findOneAndDelete({ _id: req.params.friendId });
             await Student.deleteMany({ _id: { $in: friend.students } });
 
         } catch (error) {
