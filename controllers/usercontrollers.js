@@ -37,6 +37,7 @@ const usercontroller = {
                     { _id: req.params.userId },
                     { $set: req.body },
                     { runValidators: true, new: true })
+                    res.json(user)
         } catch (error){
             console.error(error)
             res.status(500).json(error)
@@ -44,11 +45,13 @@ const usercontroller = {
     },
      async deleteusers (req, res){
         try {
-            const friend = await Users.findOneAndDelete({ _id: req.params.friendId });
-            await Student.deleteMany({ _id: { $in: friend.students } });
+            const user = await User.findOneAndDelete({ _id: req.params.userId });
+            await Thought.deleteMany({ _id: { $in: user.thoughts } });
+            res.json({ message: "user deleted"})
 
         } catch (error) {
             console.error(error)
+
             res.status(500).json(error)
         }
     },

@@ -43,6 +43,7 @@ const thoughtcontrollers = {
                     { runValidators: true, new: true })
         } catch (error) {
             console.error(error)
+            res.json(updatethought);
             res.status(500).json(error)
         };
     },
@@ -54,6 +55,7 @@ const thoughtcontrollers = {
 
         } catch (error) {
             console.error(error)
+            res.json(deltethought);
             res.status(500).json(error)
         }
     },
