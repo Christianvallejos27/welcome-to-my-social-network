@@ -13,7 +13,7 @@ const thoughtcontrollers = {
 
     async getonethought(req, res){
         try {
-            const onethought = await Thought.findOne({_id:req.params.userId}).select("-__v").populate("thoughts")
+            const onethought = await Thought.findOne({_id:req.params.thoughtId})
             res.json(onethought)
         } catch (error) {
             console.error(error)
@@ -38,12 +38,13 @@ const thoughtcontrollers = {
         try {
         
                 const thought= await Thought.findOneAndUpdate(
-                    { _id: req.params.userId },
+                    { _id: req.params.thoughtId },
                     { $set: req.body },
                     { runValidators: true, new: true })
+                    res.json(thought);
         } catch (error) {
             console.error(error)
-            res.json(updatethought);
+          
             res.status(500).json(error)
         };
     },
@@ -51,11 +52,10 @@ const thoughtcontrollers = {
     async deletethought(req, res){
         try {
             const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
-            await thought.deleteMany({ _id: { $in: thought } });
+            res.json({message: "deleted thought" });
 
         } catch (error) {
             console.error(error)
-            res.json(deltethought);
             res.status(500).json(error)
         }
     },
